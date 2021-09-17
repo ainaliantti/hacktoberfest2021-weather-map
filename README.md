@@ -7,6 +7,6 @@ Globe dots should be colored according to regional temperatures.
 
 Front end stack: WebGL for globe, React for other stuff..
 
-Back end: NodeJS, weather API (maybe https://www.weatherapi.com/ ?), maybe some geography api
+Back end: NodeJS, weather API (maybe https://www.weatherapi.com/ ?)
 
 Database: TBD, if we store just the latest weather data and update every few hours, maybe a simple key value store.
