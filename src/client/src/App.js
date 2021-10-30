@@ -1,24 +1,44 @@
+import React, { Component } from 'react';
 import './App.css';
-import * as THREE from "three";
+import * as THREE from 'three';
 
-function App() {
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+class App extends Component {
+    componentDidMount() {
+        //scene
+        var scene = new THREE.Scene();
 
-    var renderer = new THREE.WebGLRenderer();
-    renderer.setSize( window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+        //camera
+        var camera = new THREE.PerspectiveCamera(
+            45,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            1000
+        );
 
-    var geometry = new THREE.SphereGeometry(1, 32, 32);
-    var material = new THREE.MeshPhongMaterial({ color: 0xffff00 });
-    var earthmesh = new THREE.Mesh(geometry, material);
-    scene.add(earthmesh);
-    
-    camera.position.z = 50;
-    renderer.render(scene, camera)
-    return(
-        <div></div>
-    )
+        //controls NOT WORKING!!!
+        //var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        //renderer
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const material = new THREE.MeshPhongMaterial();
+        const sphere = new THREE.Mesh(geometry, material);
+
+        //light
+        scene.add(new THREE.AmbientLight(0x333333));
+        var light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(5, 3, 5);
+
+        scene.add(light);
+        scene.add(sphere);
+        camera.position.z = 10;
+        renderer.render(scene, camera);
+    }
+    render() {
+        return <div />;
+    }
 }
-
 export default App;
