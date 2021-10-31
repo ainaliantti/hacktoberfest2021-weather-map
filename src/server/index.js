@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 
-require('dotenv').config();
-const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+// require('dotenv').config();
+// const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 
 app.get('/api/cities/', (request, response) => {
     // TODO
