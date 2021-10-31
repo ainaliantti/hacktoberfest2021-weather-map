@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 class App extends Component {
     componentDidMount() {
@@ -15,13 +16,13 @@ class App extends Component {
             1000
         );
 
-        //controls NOT WORKING!!!
-        //var controls = new THREE.OrbitControls(camera, renderer.domElement);
-
         //renderer
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
+
+        //orbit control allow the camera to orbit around a target
+        var controls = new OrbitControls(camera, renderer.domElement);
 
         const geometry = new THREE.SphereGeometry(1, 32, 32);
         const material = new THREE.MeshPhongMaterial();
@@ -35,7 +36,12 @@ class App extends Component {
         scene.add(light);
         scene.add(sphere);
         camera.position.z = 10;
-        renderer.render(scene, camera);
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
     }
     render() {
         return <div />;
