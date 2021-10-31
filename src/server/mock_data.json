@@ -1,0 +1,37 @@
+{
+    "Helsinki": {
+        "coordinates": {
+            "longitude": 60.1699,
+            "latitude": 24.9384
+        },
+        "temperature": 10.0
+    },
+    "Beijing": {
+        "coordinates": {
+            "longitude": 39.9042,
+            "latitude": 116.4074
+        },
+        "temperature": 7
+    },
+    "Colorado": {
+        "coordinates": {
+            "longitude": 39.5501,
+            "latitude": 105.7821
+        },
+        "temperature": 4
+    },
+    "Salvador": {
+        "coordinates": {
+            "longitude": 12.9777,
+            "latitude": 38.5016
+        },
+        "temperature": 27
+    },
+    "Cape Town": {
+        "coordinates": {
+            "longitude": 33.9249,
+            "latitude": 18.4241
+        },
+        "temperature": 19
+    }
+}

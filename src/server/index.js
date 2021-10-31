@@ -1,12 +1,11 @@
 const express = require('express');
 const app = express();
-
+const mock_json_data = require('./mock_data.json');
 // require('dotenv').config();
 // const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 
 app.get('/api/cities/', (request, response) => {
-    // TODO
-    response.status(404).send();
+    response.json(mock_json_data);
 });
 
 app.get('/api/cities/:city', (request, response) => {
