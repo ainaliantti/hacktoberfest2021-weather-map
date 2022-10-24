@@ -7,6 +7,7 @@ class App extends Component {
     componentDidMount() {
         //scene
         var scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0c2e4e);
 
         //camera
         var camera = new THREE.PerspectiveCamera(
@@ -27,14 +28,19 @@ class App extends Component {
         const geometry = new THREE.SphereGeometry(1, 32, 32);
         const material = new THREE.MeshPhongMaterial();
         const sphere = new THREE.Mesh(geometry, material);
+        sphere.material.color.setHex(0x132f59);
+        scene.add(sphere);
 
         //light
-        scene.add(new THREE.AmbientLight(0x333333));
-        var light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(5, 3, 5);
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+        hemiLight.groundColor.setHSL(0.095, 1, 0.75);
+        hemiLight.position.set(0, 50, 0);
+        scene.add(hemiLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+        dirLight.position.set(-1, 1.75, 1);
+        dirLight.position.multiplyScalar(30);
+        scene.add(dirLight);
 
-        scene.add(light);
-        scene.add(sphere);
         camera.position.z = 10;
         function animate() {
             requestAnimationFrame(animate);
