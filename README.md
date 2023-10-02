@@ -3,7 +3,7 @@
 familiarize with: https://github.blog/2020-12-21-how-we-built-the-github-globe/
 https://stripe.com/blog/globe
 
-Globe dots should be colored according to regional temperatures.
+Globe dots should be colored according to regional temperatures. See https://www.windy.com/en/-Wind-wind
 
 Front end stack: WebGL/three.js for globe, React for other stuff..
 
