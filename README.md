@@ -1,6 +1,6 @@
 ### hacktoberfest2021-weather-map
 
-familiarize with: https://github.blog/2020-12-21-how-we-built-the-github-globe/
+Familiarize with: https://github.blog/2020-12-21-how-we-built-the-github-globe/
 https://stripe.com/blog/globe
 
 Globe dots should be colored according to regional temperatures. See https://www.windy.com/en/-Wind-wind
