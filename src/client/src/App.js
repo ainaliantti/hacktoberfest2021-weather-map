@@ -5,15 +5,14 @@ import InnerGlobe from './InnerGlobe.js';
 import DotGlobe from './DotGlobe.js';
 
 class App extends Component {
-    componentDidMount() {}
+  componentDidMount() {}
 
-    render() {
-        return (
-            <div>
-                <InnerGlobe></InnerGlobe>
-                <DotGlobe></DotGlobe>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <InnerGlobe></InnerGlobe>
+      </div>
+    );
+  }
 }
 export default App;
