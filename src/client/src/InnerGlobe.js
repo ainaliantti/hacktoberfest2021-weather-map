@@ -18,7 +18,7 @@ export default class InnerGlobe extends Component {
       camera = new THREE.PerspectiveCamera(
         45,
         window.innerWidth / window.innerHeight,
-        0.1,
+        1,
         1000
       );
       camera.position.z = 10;
@@ -57,20 +57,44 @@ export default class InnerGlobe extends Component {
      * Generates dots around the globe
      */
     function addDots() {
-      const dotGeometry = new THREE.SphereGeometry(0.01, 32, 32);
-      const dotMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+      const DOT_COUNT = 7000; // Adjust the number of dots as needed
+      const dotGeometry = new THREE.CircleGeometry(0.01, 16);
 
-      // Generate random coordinates for a specified number of dots
-      const numberOfDots = 50; // Adjust the number of dots as needed
-      for (let i = 0; i < numberOfDots; i++) {
-        const lat = Math.random() * 180 - 90; // Random latitude between -90 and 90 degrees
-        const lon = Math.random() * 360 - 180; // Random longitude between -180 and 180 degrees
-        const phi = (90 - lat) * (Math.PI / 180);
-        const theta = (180 - lon) * (Math.PI / 180);
+      // The XYZ coordinate of each dot
+      const positions = [];
 
-        const dot = new THREE.Mesh(dotGeometry, dotMaterial);
-        dot.position.setFromSphericalCoords(1, phi, theta);
-        scene.add(dot);
+      // A random identifier for each dot
+      const rndId = [];
+
+      // The country border each dot falls within
+      const countryIds = [];
+
+      const vector = new THREE.Vector3();
+
+      for (let i = 0; i < DOT_COUNT; i++) {
+        const phi = Math.acos(-1 + (2 * i) / DOT_COUNT);
+        const theta = Math.sqrt(DOT_COUNT * Math.PI) * phi;
+
+        // Pass the angle between this dot an the Y-axis (phi)
+        // Pass this dot’s angle around the y axis (theta)
+        // Scale each position by 600 (the radius of the globe)
+        vector.setFromSphericalCoords(1, phi, theta);
+        dotGeometry.lookAt(vector);
+
+        // Create a mesh for each dot using the geometry
+        const dotMesh = new THREE.Mesh(
+          dotGeometry,
+          new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            side: THREE.DoubleSide,
+          })
+        );
+
+        // Move the dot to the newly calculated position
+        dotMesh.position.copy(vector);
+
+        // Add the dot to the sphere group
+        sphere.add(dotMesh);
       }
     }
 
