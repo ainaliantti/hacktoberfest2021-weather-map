@@ -21,10 +21,10 @@ export default class InnerGlobe extends Component {
         1,
         1000
       );
-      camera.position.z = 10;
+      camera.position.z = 160;
 
       //renderer
-      renderer = new THREE.WebGLRenderer();
+      renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
@@ -35,7 +35,7 @@ export default class InnerGlobe extends Component {
       controls.maxDistance = 100;
 
       //create the actual sphere
-      const geometry = new THREE.SphereGeometry(1, 32, 32);
+      const geometry = new THREE.SphereGeometry(32, 32, 32);
       const material = new THREE.MeshPhongMaterial();
       sphere = new THREE.Mesh(geometry, material);
       sphere.material.color.setHex(0x132f59);
@@ -46,10 +46,8 @@ export default class InnerGlobe extends Component {
       hemiLight.groundColor.setHSL(0.095, 1, 0.75);
       hemiLight.position.set(0, 50, 0);
       scene.add(hemiLight);
-      const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-      dirLight.position.set(-1, 1.75, 1);
-      dirLight.position.multiplyScalar(30);
-      scene.add(dirLight);
+      const light = new THREE.AmbientLight(0x404040); // soft white light
+      scene.add(light);
       addDots();
     }
 
@@ -57,8 +55,7 @@ export default class InnerGlobe extends Component {
      * Generates dots around the globe
      */
     function addDots() {
-      const DOT_COUNT = 7000; // Adjust the number of dots as needed
-      const dotGeometry = new THREE.CircleGeometry(0.01, 16);
+      const DOT_COUNT = 30000; // Adjust the number of dots as needed
 
       // The XYZ coordinate of each dot
       const positions = [];
@@ -71,30 +68,26 @@ export default class InnerGlobe extends Component {
 
       const vector = new THREE.Vector3();
 
-      for (let i = 0; i < DOT_COUNT; i++) {
+      for (let i = DOT_COUNT; i >= 0; i--) {
         const phi = Math.acos(-1 + (2 * i) / DOT_COUNT);
         const theta = Math.sqrt(DOT_COUNT * Math.PI) * phi;
 
         // Pass the angle between this dot an the Y-axis (phi)
         // Pass this dot’s angle around the y axis (theta)
-        // Scale each position by 600 (the radius of the globe)
-        vector.setFromSphericalCoords(1, phi, theta);
+        // Scale each position by the radius of the globe)
+        vector.setFromSphericalCoords(32, phi, theta);
+
+        // Create a new dot geometry and mesh for each dot
+        const dotGeometry = new THREE.CircleGeometry(0.08, 5);
         dotGeometry.lookAt(vector);
 
-        // Create a mesh for each dot using the geometry
-        const dotMesh = new THREE.Mesh(
-          dotGeometry,
-          new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            side: THREE.DoubleSide,
-          })
-        );
+        const dotMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff }); // Customize material as needed
 
-        // Move the dot to the newly calculated position
-        dotMesh.position.copy(vector);
+        const dot = new THREE.Mesh(dotGeometry, dotMaterial);
+        dot.position.copy(vector); // Set the position of the dot
 
         // Add the dot to the sphere group
-        sphere.add(dotMesh);
+        sphere.add(dot);
       }
     }
 
